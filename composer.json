@@ -1,0 +1,24 @@
+{
+    "name": "deep273/practice_server",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Deep273",
+            "email": "soul42460@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^7.4 | ^8.0"
+
+    },
+    "autoload": {
+        "psr-4": {
+            "Src\\": "core/Src/",
+            "": "app/"
+        }
+    }
+
+}
+
