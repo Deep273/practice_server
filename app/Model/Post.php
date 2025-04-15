@@ -9,4 +9,8 @@ class Post extends Model
 {
     use HasFactory;
     public $timestamps = false;
+
+    public static function where(string $string, mixed $id)
+    {
+    }
 }
