@@ -1,1 +1,6 @@
-/vendor/
+.idea
+vendor
+composer.lock
+access.log
+error.log
+config/db.php
