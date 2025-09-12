@@ -7,6 +7,8 @@ use Src\View;
 use Src\Request;
 use Model\User;
 use Src\Auth\Auth;
+use Model\Book;
+use Model\Reader;
 class Site
 {
     /**
@@ -49,6 +51,81 @@ class Site
         Auth::logout();
         app()->route->redirect('/hello');
     }
+
+    // Метод для отображения формы добавления книги
+    // Метод для отображения формы добавления книги
+    // Отображение формы
+    public function createBook(): string
+    {
+        return new View('site/create-book'); // путь до views/site/add_book.php
+    }
+
+// Обработка формы
+    public function storeBook(Request $request): string
+    {
+        $data = $request->all();
+
+        if (
+            empty($data['title']) ||
+            empty($data['author']) ||
+            empty($data['published_year']) ||
+            empty($data['price'])
+        ) {
+            return new View('site/create-book', ['message' => 'Обязательные поля не заполнены!']);
+        }
+
+        \Model\Book::create([
+            'title' => $data['title'],
+            'author' => $data['author'],
+            'published_year' => (int)$data['published_year'],
+            'price' => (float)$data['price'],
+            'is_new_edition' => isset($data['is_new_edition']) ? 1 : 0,
+            'description' => $data['description'] ?? null,
+        ]);
+
+        return new View('site/create-book', ['message' => 'Книга успешно добавлена!']);
+    }
+
+
+    // Метод для отображения списка книг
+    public function listBooks(Request $request)
+    {
+        // Получаем все книги
+        $books = Book::all();
+
+        // Рендерим представление с помощью существующего метода (например, view)
+        return new View('list_books', ['books' => $books]);
+    }
+    public function createReader(): string
+    {
+        return new View('site/add_reader');
+    }
+
+// Обработка формы добавления читателя
+    public function storeReader(Request $request): string
+    {
+        $data = $request->all();
+
+        if (
+            empty($data['card_number']) ||
+            empty($data['full_name']) ||
+            empty($data['address']) ||
+            empty($data['phone_number'])
+        ) {
+            return new View('site/add_reader', ['message' => 'Все поля обязательны!']);
+        }
+
+        Reader::create([
+            'card_number' => $data['card_number'],
+            'full_name' => $data['full_name'],
+            'address' => $data['address'],
+            'phone_number' => $data['phone_number']
+        ]);
+
+        return new View('site/add_reader', ['message' => 'Читатель успешно добавлен!']);
+    }
+
+
 
 
 }
