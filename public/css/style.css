@@ -1,147 +1,371 @@
-*{
+body {
     margin: 0;
-    padding: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    height: 100vh;
+    background-color: #111111;
 }
 
-body {
-    background-color: #121212;
-    color: #ddd;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+.sidebar {
+    width: 220px;
+    background-color: #222222;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px 0;
+}
+
+.sidebar .logo {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 15px 0;
+    border-bottom: 1px solid #444;
+}
+
+.sidebar nav {
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar nav a {
+    padding: 12px 20px;
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background 0.3s;
+}
+
+.sidebar nav a img {
+    width: 20px;
+    height: 20px;
+}
+
+.sidebar nav a:hover,
+.sidebar nav a.active {
+    background-color: #6a0dad;
+    border-radius: 8px;
+}
+
+.sidebar .bottom {
+    border-top: 1px solid #6a0dad;
+    padding: 15px 20px;
+}
+
+.sidebar .bottom a {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sidebar .bottom a img {
+    width: 20px;
+    height: 20px;
+}
+
+main {
+    flex: 1;
+    padding: 20px;
+}
+
+.auth-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    margin: 0;
+    height: 100%;
 }
 
-/* Фиксированная шапка навигации */
-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: #121212;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-    z-index: 1000;
-}
-
-/* Контейнер навигации */
-.navigation {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 15px 30px;
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-}
-
-/* Ссылки навигации */
-.nav-link {
-    color: #ccc;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 16px;
-    position: relative;
-    padding: 5px 0;
-    transition: color 0.3s ease;
-}
-
-/* Анимация underline */
-.nav-link::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    height: 2px;
-    width: 0%;
-    background-color: #8a2be2;
-    transition: width 0.3s ease;
-}
-
-.nav-link:hover,
-.nav-link:focus {
-    color: #8a2be2;
-}
-
-.nav-link:hover::after,
-.nav-link:focus::after {
-    width: 100%;
-}
-
-/* Отступ для main чтобы не перекрывался шапкой */
-main {
-    padding-top: 60px; /* Высота шапки (примерно) */
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-
-form {
-    background-color: #1f1f1f;
-    padding: 50px 40px;
-    border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.5);
-    width: 480px;
-    box-sizing: border-box;
-}
-
-h2 {
+.auth-box {
+    background: #2b2b2b;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    width: 350px;
     text-align: center;
-    margin-bottom: 50px;
-    font-weight: 600;
-    color: #f0f0f0;
+    color: white;
+    margin-top: 200px;
 }
 
-h3 {
-    text-align: center;
-    color: #53008e; /* для сообщений об ошибке или уведомлений */
-    margin: 10px 0;
-    font-weight: 400;
+.auth-box h2 {
+    margin-bottom: 20px;
+    font-size: 22px;
 }
 
-label {
+.auth-box label {
     display: block;
+    text-align: left;
     font-size: 14px;
-    color: #ccc;
-    margin-bottom: 30px;
+    margin: 10px 0 5px;
 }
 
-input[type="text"],
-input[type="password"],
-input[type="number"],
-textarea{
-    width: 100%;
-    padding: 10px 12px;
-    background-color: #2c2c2c;
-    border: none;
-    border-radius: 5px;
-    color: #eee;
-    font-size: 14px;
-    box-sizing: border-box;
-    outline: none;
-    transition: background-color 0.3s ease;
-}
-
-input[type="text"]:focus,
-input[type="password"]:focus {
-    background-color: #3a3a3a;
-}
-
-button {
+.auth-box input[type="text"],
+.auth-box input[type="password"] {
     width: 100%;
     padding: 12px;
-    background-color: #3a3a3a;
-    border: none;
-    border-radius: 5px;
-    color: #eee;
-    font-weight: 600;
-    font-size: 15px;
-    cursor: pointer;
-    margin-top: 10px;
-    transition: background-color 0.3s ease;
+    border: 1px solid #555;
+    border-radius: 8px;
+    background: #1e1e1e;
+    color: white;
+    font-size: 14px;
+    box-sizing: border-box;
 }
 
-button:hover {
-    background-color: #676767;
+.auth-box input:focus {
+    border-color: #6a0dad;
+    outline: none;
+}
+
+.auth-box button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 8px;
+    background: #6a0dad;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.auth-box button:hover {
+    background: #8a2be2;
+}
+
+.auth-options {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #aaa;
+}
+
+.auth-options label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.auth-options a {
+    color: #aaa;
+    text-decoration: none;
+    padding-top: 13px;
+}
+
+.auth-options a:hover {
+    text-decoration: underline;
+}
+
+.auth-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.auth-box {
+    background: #2b2b2b;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    width: 350px;
+    text-align: center;
+    color: white;
+}
+
+.auth-box h2 {
+    margin-bottom: 20px;
+    font-size: 22px;
+}
+
+.auth-box label {
+    display: block;
+    text-align: left;
+    font-size: 14px;
+    margin: 10px 0 5px;
+}
+
+.auth-box input[type="text"],
+.auth-box input[type="password"],
+.auth-box input[type="email"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #555;
+    border-radius: 8px;
+    background: #1e1e1e;
+    color: white;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.auth-box input:focus {
+    border-color: #6a0dad;
+    outline: none;
+}
+
+.auth-box button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 8px;
+    background: #6a0dad;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.auth-box button:hover {
+    background: #8a2be2;
+}
+
+.auth-options {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #aaa;
+}
+
+.auth-options label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.auth-options a {
+    color: #aaa;
+    text-decoration: none;
+}
+
+.auth-options a:hover {
+    text-decoration: underline;
+}
+
+.main-header {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    padding: 18px 40px;
+    background: #111;
+}
+
+/* Поиск */
+.search-form {
+    margin-left: auto;
+}
+
+.search-wrap {
+    position: relative;
+    width: 320px;
+    max-width: 100%;
+}
+
+.search-input {
+    width: 100%;
+    padding: 10px 44px 10px 16px;
+    border-radius: 8px;
+    border: none;
+    height: 36px;
+    background: #6a0dad;
+    color: #fff;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.search-input::placeholder {
+    color: rgba(255,255,255,0.8);
+}
+
+.search-btn {
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+}
+
+/* Аватар */
+.header-avatar .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #6a0dad;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.6);
+}
+
+/* --- Контент --- */
+.main-content {
+    padding: 20px 40px;
+}
+
+.content h2 {
+    font-size: 28px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: white;
+}
+
+.content h3 {
+    font-size: 18px;
+    margin-bottom: 30px;
+    font-weight: normal;
+    color: #bbb;
+}
+
+/* Книги */
+.books-grid {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.book-card {
+    background: #1a1a1a;
+    border-radius: 12px;
+    padding: 15px;
+    text-align: center;
+    width: 180px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.book-card img {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 12px;
+}
+
+.book-card h4 {
+    font-size: 16px;
+    margin-bottom: 8px;
+    color: #fff;
+}
+
+.book-card p {
+    font-size: 14px;
+    color: #aaa;
+}
+
+.book-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.7);
 }
 

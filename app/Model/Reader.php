@@ -15,4 +15,10 @@ class Reader extends Model
         'address',
         'phone_number'
     ];
+    public function books()
+    {
+        return $this->belongsToMany(Book::class, 'book_reader', 'reader_id', 'book_id')
+            ->withPivot('issued_at', 'returned_at');
+    }
+
 }

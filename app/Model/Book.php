@@ -17,4 +17,10 @@ class Book extends Model
         'is_new_edition',
         'description',
     ];
+    public function readers()
+    {
+        return $this->belongsToMany(Reader::class, 'book_reader', 'book_id', 'reader_id')
+            ->withPivot('issued_at', 'returned_at');
+    }
+
 }
