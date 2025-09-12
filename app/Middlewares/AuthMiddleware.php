@@ -14,4 +14,6 @@ class AuthMiddleware
             app()->route->redirect('/login');
         }
     }
+
 }
+
