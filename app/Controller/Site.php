@@ -9,6 +9,7 @@ use Model\User;
 use Src\Auth\Auth;
 use Model\Book;
 use Model\Reader;
+use Model\Borrowing;
 use Carbon\Carbon;
 class Site
 {
@@ -33,6 +34,7 @@ class Site
         }
         return new View('site.signup');
     }
+
     public function login(Request $request): string
     {
         //Если просто обращение к странице, то отобразить форму
@@ -251,7 +253,7 @@ class Site
             // Соберём все книги у всех читателей в один список
             $books = collect();
             foreach ($readers as $reader) {
-                $books = $books->merge($reader->books->map(function($book) use ($reader) {
+                $books = $books->merge($reader->books->map(function ($book) use ($reader) {
                     $book->reader_name = $reader->full_name;
                     return $book;
                 }));
@@ -273,7 +275,7 @@ class Site
 
         if ($bookId) {
             // Загружаем книгу с читателями, которые брали ее (включая даты)
-            $book = Book::with(['readers' => function($query) {
+            $book = Book::with(['readers' => function ($query) {
                 $query->orderBy('book_reader.issued_at', 'desc');
             }])->find($bookId);
 
@@ -296,7 +298,7 @@ class Site
     public function mostPopularBooks(): string
     {
         // Получаем книги с подсчётом количества выдач (borrowings)
-        $books = Book::withCount(['readers as borrowings_count' => function($query) {
+        $books = Book::withCount(['readers as borrowings_count' => function ($query) {
             // Если нужно, можно добавить дополнительные условия (например, только активные выдачи)
         }])
             ->orderBy('borrowings_count', 'desc')
@@ -306,38 +308,4 @@ class Site
             'books' => $books,
         ]);
     }
-
-    // Показ формы добавления библиотекаря
-    public function createLibrarian(Request $request): string
-    {
-        $user = Auth::user();
-        if (!$user || !$user->isAdmin()) {
-            return new View('site.403', ['message' => 'Доступ запрещен']);
-        }
-
-        if ($request->method === 'POST') {
-            $data = $request->all();
-
-            // Валидация
-            if (empty($data['name']) || empty($data['login']) || empty($data['password'])) {
-                return new View('site.create_librarian', ['message' => 'Все поля обязательны']);
-            }
-
-            // Создание пользователя с ролью "librarian"
-            \Model\User::create([
-                'name' => $data['name'],
-                'login' => $data['login'],
-                'password' => $data['password'], // захешируется в booted()
-                'role' => 'librarian' // или \Model\User::ROLE_LIBRARIAN, если есть константа
-            ]);
-
-            return new View('site.create_librarian', ['message' => 'Библиотекарь успешно добавлен!']);
-        }
-
-        // Если GET-запрос — просто показываем форму
-        return new View('site.create_librarian');
-    }
-
-
-
 }

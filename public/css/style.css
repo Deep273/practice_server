@@ -369,3 +369,74 @@ main {
     box-shadow: 0 8px 20px rgba(0,0,0,0.7);
 }
 
+body {
+    background-color: #121212; /* Темный фон */
+    color: #ccc; /* Светло-серый текст */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 20px;
+}
+
+h2 {
+    color: #9b59b6; /* Фиолетовый заголовок */
+    margin-bottom: 20px;
+}
+
+/* Стиль таблицы */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #1e1e2f; /* Темно-серый фон таблицы */
+    box-shadow: 0 0 10px #6a0dad88; /* Легкая фиолетовая тень */
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Заголовок таблицы */
+thead tr {
+    background-color: #6a0dad; /* Яркий фиолетовый */
+    color: #fff;
+    text-align: left;
+}
+
+thead th {
+    padding: 12px 15px;
+    font-weight: 600;
+}
+
+/* Строки тела таблицы */
+tbody tr {
+    border-bottom: 1px solid #444;
+    transition: background-color 0.3s ease;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #2b2b3d; /* Темный серый для четных строк */
+}
+
+tbody tr:hover {
+    background-color: #4a2cff33; /* Полупрозрачный фиолетовый при наведении */
+}
+
+/* Ячейки */
+tbody td {
+    padding: 12px 15px;
+    color: #ddd;
+}
+
+/* Новое издание - выделение */
+tbody td:nth-child(5) {
+    font-weight: 600;
+    color: #bfa0ff;
+}
+
+/* Отступы у описания, если нужно */
+tbody td:last-child {
+    white-space: pre-wrap; /* Сохраняет переносы строк */
+    max-width: 400px;
+}
+
+/* Сообщение о пустом списке */
+p {
+    font-size: 16px;
+    color: #888;
+}

@@ -18,5 +18,4 @@ class RoleMiddleware
             exit();
         }
     }
-
 }
