@@ -1,18 +1,20 @@
-<h1>Добавить нового библиотекаря</h1>
+<div class="librarian-page">
+    <h2 class="page-title">Добавить библиотекаря</h2>
 
-<?php if (!empty($message)): ?>
-    <p style="color: red"><?= $message ?></p>
-<?php endif; ?>
+    <?php if (!empty($message)): ?>
+        <p class="error-msg"><?= $message ?></p>
+    <?php endif; ?>
 
-<form method="POST" action="">
-    <label>Имя:</label><br>
-    <input type="text" name="name"><br><br>
+    <form method="POST" action="" class="librarian-form">
+        <label>Имя:</label>
+        <input type="text" name="name" required>
 
-    <label>Логин:</label><br>
-    <input type="text" name="login"><br><br>
+        <label>Логин:</label>
+        <input type="text" name="login" required>
 
-    <label>Пароль:</label><br>
-    <input type="password" name="password"><br><br>
+        <label>Пароль:</label>
+        <input type="password" name="password" required>
 
-    <button type="submit">Создать библиотекаря</button>
-</form>
+        <button type="submit" class="btn submit-btn">Создать библиотекаря</button>
+    </form>
+</div>

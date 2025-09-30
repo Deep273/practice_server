@@ -1,4 +1,3 @@
-
 <header class="main-header">
     <form class="search-form">
         <div class="search-wrap">

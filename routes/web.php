@@ -58,3 +58,6 @@ Route::add('GET', '/most-popular-books', [Controller\Site::class, 'mostPopularBo
 // Только для администратора
 Route::add(['GET', 'POST'], '/create-librarian', [Controller\Site::class, 'createLibrarian'])
     ->middleware('role:admin');
+// Список библиотекарей (только админ)
+Route::add('GET', '/librarians', [Controller\Site::class, 'listLibrarians'])
+    ->middleware('role:admin');

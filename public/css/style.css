@@ -674,5 +674,144 @@ h2 {
     height: 170px;
     object-fit: cover;
     border-radius: 6px;
-    flex-shrink: 0;
 }
+
+.librarian-page {
+    background: #0d0d0d;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    padding: 40px;
+    max-width: 500px;
+    margin: 40px auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+}
+
+.librarian-page .page-title {
+    font-size: 24px;
+    margin-bottom: 25px;
+    font-weight: bold;
+    color: #fff;
+    text-align: center;
+}
+
+.librarian-page .error-msg {
+    color: #5fff4d;
+    font-size: 14px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.librarian-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.librarian-form label {
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #ccc;
+}
+
+.librarian-form input {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #444;
+    background: #1a1a1a;
+    color: #fff;
+    font-size: 14px;
+    transition: border 0.3s;
+}
+
+.librarian-form input:focus {
+    border-color: #6a0dad;
+    outline: none;
+}
+
+.librarian-form .btn {
+    background: #6a0dad;
+    color: #fff;
+    border: none;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.librarian-form .btn:hover {
+    background: #8a2be2;
+}
+
+.librarians-page {
+    background: #0d0d0d;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+
+.librarians-page .page-title {
+    font-size: 22px;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.librarians-page .empty-msg {
+    color: #ccc;
+    font-style: italic;
+}
+
+.librarians-page .actions {
+    margin-bottom: 20px;
+}
+
+.librarians-page .btn {
+    background: #a259ff;
+    border: none;
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: 8px;
+    margin-right: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.2s;
+}
+
+.librarians-page .btn:hover {
+    background: #8e3ffb;
+}
+
+.librarians-page .librarians-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #1a1a1a;
+    border-radius: 10px;
+    overflow: hidden;
+    color: #fff;
+}
+
+.librarians-page .librarians-table thead {
+    background: #111;
+    color: #a259ff;
+}
+
+.librarians-page .librarians-table th,
+.librarians-page .librarians-table td {
+    padding: 12px 15px;
+    font-size: 14px;
+    text-align: left;
+}
+
+.librarians-page .librarians-table thead th {
+    border-bottom: 2px solid #a259ff;
+}
+
+.librarians-page .librarians-table tbody tr {
+    border-bottom: 1px solid #333;
+}
+
+.librarians-page .librarians-table tbody tr:hover {
+    background: #222;
+}
+
