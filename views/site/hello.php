@@ -29,13 +29,13 @@
         <h3>Книги, пользующиеся наибольшим спросом</h3>
 
         <div class="books-grid">
-            <div class="book-card">
+            <div class="book-card1">
                 <img src="public/img/witcher.png" alt="Ведьмак">
                 <h4>“Ведьмак”<br>Анджей Сапковский</h4>
                 <p>Цена: 1 080р.</p>
             </div>
 
-            <div class="book-card">
+            <div class="book-card1">
                 <img src="public/img/star.png" alt="Виноваты звезды">
                 <h4>“Виноваты звезды”<br>Джон Грин</h4>
                 <p>Цена: 1 080р.</p>
