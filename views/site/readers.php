@@ -18,9 +18,12 @@
         <p class="empty-msg">Читателей пока нет.</p>
     <?php else: ?>
         <div class="actions">
-            <button class="btn">Добавить читателя</button>
+            <a href="<?= app()->route->getUrl('/create-reader') ?>" class="btn">
+                Добавить читателя
+            </a>
             <button class="btn">Удалить читателя</button>
         </div>
+
 
         <table class="readers-table">
             <thead>

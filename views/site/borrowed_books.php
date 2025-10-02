@@ -1,6 +1,6 @@
-<h2>Выданные книги</h2>
+<h2 class="page-title">Выданные книги</h2>
 
-<form method="GET" action="/practic/borrowed-books">
+<form method="GET" action="/practic/borrowed-books" class="filter-form">
     <label>Выберите читателя:
         <select name="reader_id">
             <option value="">Все читатели</option>
@@ -11,11 +11,15 @@
             <?php endforeach; ?>
         </select>
     </label>
-    <button type="submit">Показать</button>
+    <div class="form-actions">
+        <button type="submit" class="btn">Показать</button>
+        <a href="<?= app()->route->getUrl('/issue-book') ?>" class="btn btn-add">Выдать книгу</a>
+        <a href="<?= app()->route->getUrl('/borrowers-by-book') ?>" class="btn btn-history">История книг</a>
+    </div>
 </form>
 
 <?php if (!empty($books) && $books->count() > 0): ?>
-    <table border="1" cellpadding="5" cellspacing="0">
+    <table class="borrowed-table">
         <thead>
         <tr>
             <th>Название книги</th>
@@ -35,15 +39,12 @@
                         : (isset($selectedReader) && $selectedReader ? htmlspecialchars($selectedReader->full_name) : 'Неизвестно') ?>
                 </td>
                 <td>
-                    <?php
-                    $issuedAt = $book->pivot->issued_at ?? 'Неизвестна';
-                    echo htmlspecialchars($issuedAt);
-                    ?>
+                    <?= htmlspecialchars($book->pivot->issued_at ?? 'Неизвестна') ?>
                 </td>
             </tr>
         <?php endforeach; ?>
         </tbody>
     </table>
 <?php else: ?>
-    <p>Нет выданных книг.</p>
+    <p class="empty-msg">Нет выданных книг.</p>
 <?php endif; ?>

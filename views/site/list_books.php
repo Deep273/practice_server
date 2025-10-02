@@ -15,9 +15,12 @@
     <h2 class="page-title">Список книг</h2>
 
     <div class="books-actions">
-        <button class="btn add-book">Добавить книгу</button>
+        <a href="<?= app()->route->getUrl('/create-book') ?>" class="btn add-book">Добавить книгу</a>
         <button class="btn delete-book">Удалить книгу</button>
+        <a href="<?= app()->route->getUrl('/most-popular-books') ?>" class="btn popular-books">Популярные книги</a>
     </div>
+
+
 
     <?php if (empty($books)): ?>
         <p class="empty-msg">Книг пока нет.</p>

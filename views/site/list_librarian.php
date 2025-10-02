@@ -2,6 +2,7 @@
     <h2 class="page-title">Список библиотекарей</h2>
 
     <div class="actions">
+
         <button class="btn">Добавить библиотекаря</button>
         <button class="btn">Удалить выбранных</button>
     </div>

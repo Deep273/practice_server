@@ -1,24 +1,26 @@
-<h2>Самые популярные книги</h2>
+<div class="popular-page">
+    <h2 class="page-title">Самые популярные книги</h2>
 
-<?php if ($books->count()): ?>
-    <table border="1" cellpadding="5" cellspacing="0">
-        <thead>
-        <tr>
-            <th>Название книги</th>
-            <th>Автор</th>
-            <th>Количество выдач</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php foreach ($books as $book): ?>
+    <?php if ($books->count()): ?>
+        <table class="popular-table">
+            <thead>
             <tr>
-                <td><?= htmlspecialchars($book->title) ?></td>
-                <td><?= htmlspecialchars($book->author) ?></td>
-                <td><?= $book->borrowings_count ?></td>
+                <th>Название книги</th>
+                <th>Автор</th>
+                <th>Количество выдач</th>
             </tr>
-        <?php endforeach; ?>
-        </tbody>
-    </table>
-<?php else: ?>
-    <p>Нет данных по выдачам книг.</p>
-<?php endif; ?>
+            </thead>
+            <tbody>
+            <?php foreach ($books as $book): ?>
+                <tr>
+                    <td><?= htmlspecialchars($book->title) ?></td>
+                    <td><?= htmlspecialchars($book->author) ?></td>
+                    <td><?= $book->borrowings_count ?></td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    <?php else: ?>
+        <p class="empty-msg">Нет данных по выдачам книг.</p>
+    <?php endif; ?>
+</div>

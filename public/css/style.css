@@ -380,66 +380,6 @@ h2 {
     margin-bottom: 20px;
 }
 
-/*!* Стиль таблицы *!*/
-/*table {*/
-/*    width: 100%;*/
-/*    border-collapse: collapse;*/
-/*    background-color: #1e1e2f; !* Темно-серый фон таблицы *!*/
-/*    box-shadow: 0 0 10px #6a0dad88; !* Легкая фиолетовая тень *!*/
-/*    border-radius: 8px;*/
-/*    overflow: hidden;*/
-/*}*/
-
-/*!* Заголовок таблицы *!*/
-/*thead tr {*/
-/*    background-color: #6a0dad; !* Яркий фиолетовый *!*/
-/*    color: #fff;*/
-/*    text-align: left;*/
-/*}*/
-
-/*thead th {*/
-/*    padding: 12px 15px;*/
-/*    font-weight: 600;*/
-/*}*/
-
-/*!* Строки тела таблицы *!*/
-/*tbody tr {*/
-/*    border-bottom: 1px solid #444;*/
-/*    transition: background-color 0.3s ease;*/
-/*}*/
-
-/*tbody tr:nth-child(even) {*/
-/*    background-color: #2b2b3d; !* Темный серый для четных строк *!*/
-/*}*/
-
-/*tbody tr:hover {*/
-/*    background-color: #4a2cff33; !* Полупрозрачный фиолетовый при наведении *!*/
-/*}*/
-
-/*!* Ячейки *!*/
-/*tbody td {*/
-/*    padding: 12px 15px;*/
-/*    color: #ddd;*/
-/*}*/
-
-/*!* Новое издание - выделение *!*/
-/*tbody td:nth-child(5) {*/
-/*    font-weight: 600;*/
-/*    color: #bfa0ff;*/
-/*}*/
-
-/*!* Отступы у описания, если нужно *!*/
-/*tbody td:last-child {*/
-/*    white-space: pre-wrap; !* Сохраняет переносы строк *!*/
-/*    max-width: 400px;*/
-/*}*/
-
-/*!* Сообщение о пустом списке *!*/
-/*p {*/
-/*    font-size: 16px;*/
-/*    color: #888;*/
-/*}*/
-
 .readers-page {
     background: #0d0d0d;
     color: #fff; /* белый текст только внутри страницы читателей */
@@ -472,6 +412,19 @@ h2 {
     cursor: pointer;
     font-size: 14px;
     transition: background 0.2s;
+}
+
+.readers-page a {
+    background: #a259ff;
+    border: none;
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: 8px;
+    margin-right: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.2s;
+    text-decoration: none;
 }
 
 .readers-page .btn:hover {
@@ -633,6 +586,10 @@ h2 {
     cursor: pointer;
     font-size: 14px;
     transition: background 0.3s ease;
+}
+
+.books-actions a {
+    text-decoration: none;
 }
 
 .books-actions .btn:hover {
@@ -814,4 +771,626 @@ h2 {
 .librarians-page .librarians-table tbody tr:hover {
     background: #222;
 }
+
+.reader-form {
+    background: #1a1a1a;
+    padding: 25px;
+    border-radius: 10px;
+    max-width: 500px;
+    margin: 30px auto;
+    box-shadow: 0 0 12px rgba(0,0,0,0.6);
+    color: #fff;
+    font-family: Arial, sans-serif;
+}
+
+.reader-form .form-title {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #a259ff;
+    text-align: center;
+}
+
+.reader-form label {
+    display: block;
+    margin: 10px 0 6px;
+    font-size: 14px;
+    color: #ddd;
+}
+
+.reader-form input,
+.reader-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #333;
+    border-radius: 6px;
+    background: #0d0d0d;
+    color: #fff;
+    font-size: 14px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+
+.reader-form textarea {
+    resize: vertical;
+    min-height: 70px;
+}
+
+.reader-form input:focus,
+.reader-form textarea:focus {
+    border-color: #a259ff;
+    outline: none;
+}
+
+.reader-form .btn-submit {
+    background: #a259ff;
+    border: none;
+    color: #fff;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    width: 100%;
+}
+
+.reader-form .btn-submit:hover {
+    background: #8e3ffb;
+}
+
+.reader-form .form-message {
+    color: #4caf50;
+    margin-bottom: 15px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.book-form {
+    background: #1a1a1a;
+    padding: 25px;
+    border-radius: 10px;
+    max-width: 500px;
+    margin: 20px auto;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 0 10px rgba(0,0,0,0.6);
+}
+
+.book-form h2 {
+    margin-bottom: 20px;
+    font-size: 22px;
+    color: #a259ff;
+    text-align: center;
+}
+
+.book-form label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+    font-size: 14px;
+    color: #ccc;
+}
+
+.book-form input[type="text"],
+.book-form input[type="number"],
+.book-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #333;
+    border-radius: 6px;
+    background: #0d0d0d;
+    color: #fff;
+    font-size: 14px;
+    outline: none;
+    transition: border 0.2s;
+}
+
+.book-form input[type="text"]:focus,
+.book-form input[type="number"]:focus,
+.book-form textarea:focus {
+    border-color: #a259ff;
+}
+
+.book-form .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    color: #bbb;
+}
+
+.book-form .btn-submit {
+    background: #a259ff;
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    font-size: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+    width: 100%;
+}
+
+.book-form .btn-submit:hover {
+    background: #8e3ffb;
+}
+
+.form-message {
+    text-align: center;
+    font-size: 14px;
+    margin-bottom: 15px;
+    color: lightgreen;
+}
+
+.page-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #fff;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+.filter-form {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: #fff;
+    font-family: Arial, sans-serif;
+}
+
+.filter-form select {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #444;
+    background: #1a1a1a;
+    color: #fff;
+    font-size: 14px;
+    outline: none;
+    transition: border 0.2s;
+}
+
+.filter-form select:focus {
+    border-color: #a259ff;
+}
+
+.btn {
+    background: #a259ff;
+    color: #fff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.2s;
+}
+
+.btn:hover {
+    background: #8e3ffb;
+}
+
+.borrowed-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #1a1a1a;
+    border-radius: 10px;
+    overflow: hidden;
+    color: #fff;
+    font-size: 14px;
+}
+
+.borrowed-table thead {
+    background: #111;
+    color: #a259ff;
+    font-weight: bold;
+}
+
+.borrowed-table th,
+.borrowed-table td {
+    padding: 12px 15px;
+    text-align: left;
+}
+
+.borrowed-table thead th {
+    border-bottom: 2px solid #a259ff;
+}
+
+.borrowed-table tbody tr {
+    border-bottom: 1px solid #333;
+}
+
+.borrowed-table tbody tr:hover {
+    background: #222;
+}
+
+.empty-msg {
+    color: #aaa;
+    font-style: italic;
+    margin-top: 15px;
+}
+
+/* Контейнер по центру */
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh; /* почти весь экран */
+    padding: 20px;
+}
+
+/* Внутренний блок */
+.form-container > div {
+    background: #1a1a1a;
+    padding: 25px 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
+    width: 100%;
+    max-width: 450px;
+}
+
+/* Заголовок */
+.form-title {
+    text-align: center;
+    font-size: 22px;
+    margin-bottom: 20px;
+    color: #fff;
+    font-weight: bold;
+}
+
+/* Сообщение */
+.form-message {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.form-message.success {
+    color: #4CAF50; /* зелёный */
+}
+
+.form-message.error {
+    color: #ff4d4d; /* красный */
+}
+
+/* Стили формы */
+.styled-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.styled-form label {
+    font-size: 14px;
+    color: #bbb;
+    margin-bottom: 5px;
+}
+
+/* Поля */
+.styled-form select {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #333;
+    background: #2a2a2a;
+    color: #fff;
+    font-size: 14px;
+    outline: none;
+    transition: border 0.3s;
+}
+
+.styled-form select:focus {
+    border: 1px solid #a259ff;
+}
+
+/* Кнопка */
+.btn-submit {
+    background: #a259ff;
+    border: none;
+    color: #fff;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: background 0.3s;
+    font-weight: bold;
+}
+
+.btn-submit:hover {
+    background: #8e3ffb;
+}
+
+
+.actions-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.btn {
+    background: #a259ff;
+    color: #fff;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.btn:hover {
+    background: #8e3ffb;
+}
+
+.btn-add {
+    background: #a259ff;
+}
+
+.btn-add:hover {
+    background: #8e3ffb;
+}
+
+.filter-form {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 15px;
+}
+
+.filter-form label {
+    font-weight: bold;
+}
+
+.form-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    background: #a259ff;
+    color: #fff;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.btn:hover {
+    background: #8e3ffb;
+}
+
+.btn-add {
+    background: #a259ff;
+}
+
+.btn-add:hover {
+    background: #8e3ffb;
+}
+
+.form-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    background: #a259ff;
+    color: #fff;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.btn:hover {
+    background: #8e3ffb;
+}
+
+.btn-add {
+    background: #4caf50;
+}
+
+.btn-add:hover {
+    background: #43a047;
+}
+
+.btn-history {
+    background: #ff9800;
+}
+
+.btn-history:hover {
+    background: #e68900;
+}
+
+
+/* Общий контейнер */
+.history-page {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* всё прижато к левому краю */
+    padding: 20px;
+}
+
+/* Заголовок и форма в одном блоке */
+.history-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.page-title {
+    font-size: 22px;
+    margin-bottom: 12px;
+    color: #fff;
+}
+
+/* Форма фильтра */
+.filter-form {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.filter-form label {
+    color: #ccc;
+    font-size: 14px;
+}
+
+.filter-form select {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #555;
+    background: #1a1a1a;
+    color: #fff;
+}
+
+.filter-form .btn {
+    background: #a259ff;
+    border: none;
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.2s;
+}
+
+.filter-form .btn:hover {
+    background: #8e3ffb;
+}
+
+/* Таблица истории */
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #1a1a1a;
+    border-radius: 10px;
+    overflow: hidden;
+    color: #fff;
+}
+
+.history-table thead {
+    background: #111;
+    color: #a259ff;
+}
+
+.history-table th,
+.history-table td {
+    padding: 12px 15px;
+    font-size: 14px;
+    text-align: left;
+}
+
+.history-table thead th {
+    border-bottom: 2px solid #a259ff;
+}
+
+.history-table tbody tr {
+    border-bottom: 1px solid #333;
+}
+
+.history-table tbody tr:hover {
+    background: #222;
+}
+
+/* Нет данных */
+.empty-msg {
+    color: #aaa;
+    font-style: italic;
+}
+
+/* Подсветка статуса возврата */
+.not-returned {
+    color: #ff5c5c;
+    font-style: italic;
+}
+
+
+.books-actions .popular-books {
+    background-color: #a259ff; /* оранжевая кнопка */
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: background 0.3s ease;
+    display: inline-block;
+}
+
+.books-actions .popular-books:hover {
+    background-color: #8e3ffb; /* ярче при наведении */
+}
+
+
+/* Страница популярных книг */
+.popular-page {
+    background: #0d0d0d;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+
+/* Заголовок */
+.popular-page .page-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #fff;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    text-align: center;
+}
+
+/* Таблица */
+.popular-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #1a1a1a;
+    border-radius: 10px;
+    overflow: hidden;
+    color: #fff;
+    font-size: 14px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.6);
+}
+
+.popular-table thead {
+    background: #111;
+    color: #a259ff;
+    font-weight: bold;
+}
+
+.popular-table th,
+.popular-table td {
+    padding: 12px 15px;
+    text-align: left;
+}
+
+.popular-table thead th {
+    border-bottom: 2px solid #a259ff;
+}
+
+.popular-table tbody tr {
+    border-bottom: 1px solid #333;
+}
+
+.popular-table tbody tr:hover {
+    background: #222;
+    transition: background 0.3s;
+}
+
+/* Сообщение */
+.popular-page .empty-msg {
+    color: #aaa;
+    font-style: italic;
+    margin-top: 15px;
+    text-align: center;
+}
+
 
