@@ -15,6 +15,7 @@
         <button type="submit" class="btn">Показать</button>
         <a href="<?= app()->route->getUrl('/issue-book') ?>" class="btn btn-add">Выдать книгу</a>
         <a href="<?= app()->route->getUrl('/borrowers-by-book') ?>" class="btn btn-history">История книг</a>
+        <a href="<?= app()->route->getUrl('/return-book') ?>" class="btn return-book">Возврат</a>
     </div>
 </form>
 

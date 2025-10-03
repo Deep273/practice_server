@@ -22,6 +22,7 @@
 
 
 
+
     <?php if (empty($books)): ?>
         <p class="empty-msg">Книг пока нет.</p>
     <?php else: ?>

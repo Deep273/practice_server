@@ -36,14 +36,14 @@ Route::add('GET', '/return-book', [Controller\Site::class, 'returnBookList'])
 Route::add('POST', '/return-book', [Controller\Site::class, 'returnBook'])
     ->middleware('role:librarian,admin');
 
-// Список книг и читателей — тоже только для библиотекаря и админа
+// Список книг и читателей — только для библиотекаря и админки
 Route::add('GET', '/books', [Controller\Site::class, 'listBooks'])
     ->middleware('role:librarian,admin');
 
 Route::add('GET', '/readers', [Controller\Site::class, 'listReaders'])
     ->middleware('role:librarian,admin');
 
-// Просмотр кто взял какую книгу и книги у читателей
+// Просмотр кто взял какую книгу, книги у читателей
 Route::add(['GET', 'POST'], '/borrowed-books', [Controller\Site::class, 'borrowedBooks'])
     ->middleware('role:librarian,admin');
 
@@ -55,9 +55,9 @@ Route::add('GET', '/most-popular-books', [Controller\Site::class, 'mostPopularBo
     ->middleware('role:librarian,admin');
 
 
-// Только для администратора
+// Только для админки
 Route::add(['GET', 'POST'], '/create-librarian', [Controller\Site::class, 'createLibrarian'])
     ->middleware('role:admin');
-// Список библиотекарей (только админ)
+// Список библиотекарей (только админка)
 Route::add('GET', '/librarians', [Controller\Site::class, 'listLibrarians'])
     ->middleware('role:admin');

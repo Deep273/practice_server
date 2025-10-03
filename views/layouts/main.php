@@ -10,7 +10,7 @@
 </head>
 <body>
 <?php
-// Получаем текущий путь (без GET-параметров)
+
 $current = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 ?>
 <aside class="sidebar">
@@ -65,7 +65,6 @@ $current = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         </a>
     </div>
 </aside>
-
 
 
 <!-- Основной контент -->

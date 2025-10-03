@@ -13,9 +13,6 @@ use Model\Reader;
 use Carbon\Carbon;
 class Site
 {
-    /**
-     * @throws \Exception
-     */
     public function index(Request $request): string
     {
         $posts = Post::where('id', $request->id)->get();
@@ -56,8 +53,6 @@ class Site
     }
 
     // Метод для отображения формы добавления книги
-    // Метод для отображения формы добавления книги
-    // Отображение формы
     public function createBook(): string
     {
         return new View('site/create-book'); // путь до views/site/add_book.php
