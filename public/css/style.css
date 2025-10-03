@@ -640,7 +640,7 @@ h2 {
     font-family: Arial, sans-serif;
     padding: 40px;
     max-width: 500px;
-    margin: 40px auto;
+    margin: 190px auto;
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.6);
     border: 1px solid #fff;
@@ -939,6 +939,7 @@ h2 {
     gap: 15px;
     color: #fff;
     font-family: Arial, sans-serif;
+    margin-top: 40px;
 }
 
 .filter-form select {
@@ -1438,7 +1439,7 @@ h2 {
 }
 
 .return-book {
-    background: #4caf50; /* зелёная кнопка */
+    background: #4caf50;
     color: #fff;
     transition: background 0.3s ease;
 }
@@ -1447,3 +1448,8 @@ h2 {
     background: #388e3c;
 }
 
+.error {
+    color: red;
+    font-size: 14px;
+    margin: 4px 0 10px;
+}

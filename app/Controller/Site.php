@@ -9,8 +9,9 @@ use Model\User;
 use Src\Auth\Auth;
 use Model\Book;
 use Model\Reader;
+use Src\Validator\Validator;
 
-use Carbon\Carbon;
+
 class Site
 {
     public function index(Request $request): string
@@ -26,9 +27,33 @@ class Site
 
     public function signup(Request $request): string
     {
-        if ($request->method === 'POST' && User::create($request->all())) {
-            app()->route->redirect('/login');
+        if ($request->method === 'POST') {
+            // Валидатор
+            $validator = new Validator($request->all(), [
+                'name' => ['required'],
+                'login' => ['required'],
+                'password' => ['required']
+            ]);
+
+            if ($validator->fails()) {
+                return new View('site.signup', [
+                    'errors' => $validator->errors()
+                ]);
+            }
+
+            // Достаём данные
+            $data = $request->all();
+
+            // Хэшируем пароль
+            $data['password'] = password_hash($data['password'], PASSWORD_BCRYPT);
+
+            // Создание пользователя
+            if (User::create($data)) {
+                app()->route->redirect('/login');
+            }
+
         }
+
         return new View('site.signup');
     }
 
@@ -113,13 +138,23 @@ class Site
         return new View('site/add_reader', ['message' => 'Читатель успешно добавлен!']);
     }
 
-    public function listBooks(): string
+    public function listBooks(Request $request): string
     {
-        // Получаем все книги из базы
-        $books = Book::all();
+        $query = Book::query();
 
-        // Передаем книги в вид
-        return new View('site.list_books', ['books' => $books]);
+        // Если в запросе есть поисковая строка
+        if (!empty($request->get('q'))) {
+            $search = trim($request->get('q'));
+            $query->where('title', 'like', "%$search%")
+                ->orWhere('author', 'like', "%$search%");
+        }
+
+        $books = $query->get();
+
+        return new View('site.list_books', [
+            'books' => $books,
+            'search' => $request->get('q') ?? ''
+        ]);
     }
 
     public function listReaders(): string

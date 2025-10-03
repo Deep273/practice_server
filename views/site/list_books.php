@@ -1,9 +1,11 @@
 <header class="main-header">
-    <form class="search-form">
+    <form class="search-form" method="get" action="">
         <div class="search-wrap">
-            <input type="text" class="search-input" placeholder="Поиск">
+            <input type="text" name="q" class="search-input"
+                   placeholder="Поиск"
+                   value="<?= htmlspecialchars($search ?? '') ?>">
             <button class="search-btn" type="submit">
-                <img src="public/img/search_icon.svg" alt="Профиль" class="avatar">
+                <img src="public/img/search_icon.svg" alt="Поиск" class="avatar">
             </button>
         </div>
     </form>
