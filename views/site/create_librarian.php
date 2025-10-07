@@ -6,6 +6,7 @@
     <?php endif; ?>
 
     <form method="POST" action="" class="librarian-form">
+        <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
         <label>Имя:</label>
         <input type="text" name="name" required>
 

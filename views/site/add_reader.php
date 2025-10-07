@@ -4,6 +4,7 @@
     <?php endif; ?>
 
     <form method="POST">
+        <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
         <h2 class="form-title">Добавить читателя</h2>
 
         <label>Номер читательского билета:</label>

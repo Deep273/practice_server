@@ -3,6 +3,7 @@
         <div class="auth-box">
             <h2>Регистрация</h2>
             <form method="post">
+                <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
                 <label for="name">Имя</label>
                 <input type="text" id="name" name="name" value="<?= htmlspecialchars($_POST['name'] ?? '') ?>">
                 <?php if (!empty($errors['name'])): ?>

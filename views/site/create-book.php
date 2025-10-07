@@ -1,4 +1,5 @@
 <form method="POST" enctype="multipart/form-data" class="book-form">
+    <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
     <h2>Добавить книгу</h2>
 
     <label>Название:</label>
