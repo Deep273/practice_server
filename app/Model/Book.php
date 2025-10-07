@@ -16,11 +16,11 @@ class Book extends Model
         'price',
         'is_new_edition',
         'description',
+        'cover_url'
     ];
     public function readers()
     {
         return $this->belongsToMany(Reader::class, 'book_reader', 'book_id', 'reader_id')
             ->withPivot('issued_at', 'returned_at');
     }
-
 }

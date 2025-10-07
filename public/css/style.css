@@ -13,14 +13,21 @@ body {
 }
 
 .sidebar {
+    position: fixed;              /* ← фиксируем панель */
+    top: 0;
+    left: 0;
     width: 220px;
+    height: 100vh;                /* высота на весь экран */
     background-color: #222222;
     color: white;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     padding: 20px 0;
+    overflow-y: auto;             /* если контента много — появится прокрутка */
+    z-index: 1000;                /* чтобы всегда была поверх остального */
 }
+
 
 .sidebar .logo {
     text-align: center;
@@ -78,6 +85,7 @@ body {
 
 main {
     flex: 1;
+    margin-left: 220px; /* чтобы контент не залезал под sidebar */
     padding: 20px;
 }
 
@@ -874,6 +882,7 @@ h2 {
 
 .book-form input[type="text"],
 .book-form input[type="number"],
+.book-form input[type="date"],
 .book-form textarea {
     width: 100%;
     padding: 10px;
@@ -1449,7 +1458,59 @@ h2 {
 }
 
 .error {
-    color: red;
+    color: #a60000;
     font-size: 14px;
-    margin: 4px 0 10px;
+    margin: 5px 0 10px;
+}
+
+.file-upload {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.file-upload input[type="file"] {
+    display: none;
+}
+
+.file-label {
+    display: inline-block;
+    background: #6a0dad;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    font-size: 14px;
+}
+
+.file-label:hover {
+    background: #570b9a;
+}
+
+.file-name {
+    font-size: 14px;
+    color: #666;
+    font-style: italic;
+}
+
+.btn-submit {
+    background: #6a0dad;
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn-submit:hover {
+    background: #570b9a;
+}
+
+.book-form input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    cursor: pointer;
 }

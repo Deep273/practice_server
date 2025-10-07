@@ -12,36 +12,38 @@ class Request
 
     public function __construct()
     {
-        $this->body = $_REQUEST;
-        $this->method = $_SERVER['REQUEST_METHOD'];
-        $this->headers = getallheaders() ?? [];
+        $this->body = $_REQUEST ?? [];
+        $this->method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
+        $this->headers = function_exists('getallheaders') ? (getallheaders() ?: []) : [];
     }
 
+    // Получить все параметры + файлы
     public function all(): array
     {
         return $this->body + $this->files();
     }
 
-    public function set($field, $value):void
+    // Установить значение
+    public function set($field, $value): void
     {
         $this->body[$field] = $value;
     }
 
-    public function get($field)
+    // Безопасно получить значение (если нет — вернёт null или дефолтное)
+    public function get($field, $default = null)
     {
-        return $this->body[$field];
+        return $this->body[$field] ?? $default;
     }
 
+    // Вернуть все файлы
     public function files(): array
     {
-        return $_FILES;
+        return $_FILES ?? [];
     }
 
+    // Доступ к данным как к свойствам (без ошибок)
     public function __get($key)
     {
-        if (array_key_exists($key, $this->body)) {
-            return $this->body[$key];
-        }
-        throw new Error('Accessing a non-existent property');
+        return $this->body[$key] ?? null;
     }
 }

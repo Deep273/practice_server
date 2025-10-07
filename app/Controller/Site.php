@@ -59,17 +59,38 @@ class Site
 
     public function login(Request $request): string
     {
-        //Если просто обращение к странице, то отобразить форму
+        // Если просто обращение к странице, то отобразить форму
         if ($request->method === 'GET') {
             return new View('site.login');
         }
-        //Если удалось аутентифицировать пользователя, то редирект
-        if (Auth::attempt($request->all())) {
+
+        // -------- ВАЛИДАЦИЯ --------
+        $validator = new \Src\Validator\Validator(
+            $request->all(),
+            [
+                'login' => ['required'],
+                'password' => ['required'],
+            ],
+            [
+                'required' => 'Поле :field пусто',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return new View('site.login', [
+                'errors' => $validator->errors()
+            ]);
+        }
+
+        // -------- АУТЕНТИФИКАЦИЯ --------
+        if (\Src\Auth\Auth::attempt($request->all())) {
             app()->route->redirect('/hello');
         }
-        //Если аутентификация не удалась, то сообщение об ошибке
+
+        // Если аутентификация не удалась
         return new View('site.login', ['message' => 'Неправильные логин или пароль']);
     }
+
 
     public function logout(): void
     {
@@ -88,6 +109,7 @@ class Site
     {
         $data = $request->all();
 
+        // Проверка обязательных полей
         if (
             empty($data['title']) ||
             empty($data['author']) ||
@@ -97,6 +119,27 @@ class Site
             return new View('site/create-book', ['message' => 'Обязательные поля не заполнены!']);
         }
 
+        // -------- Работа с обложкой --------
+        $coverPath = null;
+
+        if (!empty($_FILES['cover']['name'])) {
+            // папка для загрузки (внутри public)
+            $uploadDir = $_SERVER['DOCUMENT_ROOT'] . '/uploads/books/';
+
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0777, true);
+            }
+
+            $fileName = time() . '_' . basename($_FILES['cover']['name']);
+            $targetFile = $uploadDir . $fileName;
+
+            if (move_uploaded_file($_FILES['cover']['tmp_name'], $targetFile)) {
+                // путь для браузера
+                $coverPath = '/uploads/books/' . $fileName;
+            }
+        }
+
+        // -------- Сохранение в БД --------
         \Model\Book::create([
             'title' => $data['title'],
             'author' => $data['author'],
@@ -104,10 +147,12 @@ class Site
             'price' => (float)$data['price'],
             'is_new_edition' => isset($data['is_new_edition']) ? 1 : 0,
             'description' => $data['description'] ?? null,
+            'cover_url' => $coverPath, // путь к файлу
         ]);
 
         return new View('site/create-book', ['message' => 'Книга успешно добавлена!']);
     }
+
 
     public function createReader(): string
     {
@@ -394,13 +439,6 @@ class Site
             'librarians' => $librarians
         ]);
     }
-
-
-
-
-
-
-
 
 }
 
