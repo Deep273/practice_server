@@ -1,3 +1,5 @@
+
+
 <div class="form-container">
     <div>
         <h2 class="form-title">Выдача книги читателю</h2>
@@ -7,6 +9,7 @@
         <?php endif; ?>
 
         <form method="POST" action="" class="styled-form">
+            <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
             <label>Книга:</label>
             <select name="book_id" required>
                 <option value="">Выберите книгу</option>

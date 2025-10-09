@@ -28,34 +28,46 @@ class Site
     public function signup(Request $request): string
     {
         if ($request->method === 'POST') {
-            // Валидатор
-            $validator = new Validator($request->all(), [
-                'name' => ['required'],
-                'login' => ['required'],
-                'password' => ['required']
+            $data = $request->all();
+
+            // Проверка обычных обязательных полей
+            $validator = new \Src\Validator\Validator($data, [
+                'name'     => ['required'],
+                'login'    => ['required'],
+                'password' => ['required'],
             ]);
 
-            if ($validator->fails()) {
-                return new View('site.signup', [
-                    'errors' => $validator->errors()
+            // Проверка сложности пароля
+            $passwordValidator = new \Src\Validator\PasswordValidator($data['password'] ?? '');
+
+            if ($validator->fails() || $passwordValidator->fails()) {
+                $errors = $validator->errors();
+
+                // Добавляем ошибки пароля, если есть
+                if ($passwordValidator->fails()) {
+                    $errors['password'] = array_merge(
+                        $errors['password'] ?? [],
+                        $passwordValidator->errors()
+                    );
+                }
+
+                return new \Src\View('site.signup', [
+                    'errors' => $errors,
+                    'old'    => $data
                 ]);
             }
 
-            // Достаём данные
-            $data = $request->all();
+            // Хэшируем и сохраняем
+            $data['password'] = md5($data['password']);
 
-            // Хэшируем пароль
-            $data['password'] = password_hash($data['password'], PASSWORD_BCRYPT);
-
-            // Создание пользователя
-            if (User::create($data)) {
+            if (\Model\User::create($data)) {
                 app()->route->redirect('/login');
             }
-
         }
 
-        return new View('site.signup');
+        return new \Src\View('site.signup');
     }
+
 
     public function login(Request $request): string
     {
@@ -108,50 +120,71 @@ class Site
     public function storeBook(Request $request): string
     {
         $data = $request->all();
+        $errors = [];
 
-        // Проверка обязательных полей
-        if (
-            empty($data['title']) ||
-            empty($data['author']) ||
-            empty($data['published_year']) ||
-            empty($data['price'])
-        ) {
-            return new View('site/create-book', ['message' => 'Обязательные поля не заполнены!']);
+        // 1️⃣ Проверка обязательных полей
+        foreach (['title', 'author', 'published_year', 'price'] as $field) {
+            if (empty($data[$field])) {
+                $errors[] = "Поле {$field} обязательно для заполнения.";
+            }
         }
 
-        // -------- Работа с обложкой --------
+        // 2️⃣ Проверка на отрицательную цену
+        if (isset($data['price']) && (float)$data['price'] < 0) {
+            $errors[] = "Цена не может быть отрицательной.";
+        }
+
+        // 3️⃣ Проверка, чтобы дата не была из будущего
+        if (!empty($data['published_year'])) {
+            $inputDate = strtotime($data['published_year']);
+            $currentDate = strtotime(date('Y-m-d'));
+            if ($inputDate > $currentDate) {
+                $errors[] = "Год издания не может быть в будущем.";
+            }
+        }
+
+        // 4️⃣ Валидация обложки
+        $imageValidator = new \Src\Validator\ImageValidator($_FILES['cover'] ?? null);
+        if ($imageValidator->fails()) {
+            $errors = array_merge($errors, $imageValidator->errors());
+        }
+
+        // 5️⃣ Если есть ошибки — вернуть форму с ними
+        if (!empty($errors)) {
+            return new View('site/create-book', [
+                'errors' => $errors,
+                'old'    => $data
+            ]);
+        }
+
+        // 6️⃣ Загрузка обложки
         $coverPath = null;
-
         if (!empty($_FILES['cover']['name'])) {
-            // папка для загрузки (внутри public)
             $uploadDir = $_SERVER['DOCUMENT_ROOT'] . '/uploads/books/';
-
             if (!is_dir($uploadDir)) {
                 mkdir($uploadDir, 0777, true);
             }
-
             $fileName = time() . '_' . basename($_FILES['cover']['name']);
             $targetFile = $uploadDir . $fileName;
-
             if (move_uploaded_file($_FILES['cover']['tmp_name'], $targetFile)) {
-                // путь для браузера
                 $coverPath = '/uploads/books/' . $fileName;
             }
         }
 
-        // -------- Сохранение в БД --------
+        // 7️⃣ Сохранение
         \Model\Book::create([
-            'title' => $data['title'],
-            'author' => $data['author'],
+            'title'          => $data['title'],
+            'author'         => $data['author'],
             'published_year' => (int)$data['published_year'],
-            'price' => (float)$data['price'],
+            'price'          => (float)$data['price'],
             'is_new_edition' => isset($data['is_new_edition']) ? 1 : 0,
-            'description' => $data['description'] ?? null,
-            'cover_url' => $coverPath, // путь к файлу
+            'description'    => $data['description'] ?? null,
+            'cover_url'      => $coverPath,
         ]);
 
         return new View('site/create-book', ['message' => 'Книга успешно добавлена!']);
     }
+
 
 
     public function createReader(): string

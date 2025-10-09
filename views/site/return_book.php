@@ -8,6 +8,7 @@
     <?php foreach ($readers as $reader): ?>
         <?php foreach ($reader->books as $book): ?>
             <form method="POST" action="" class="return-card">
+                <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
                 <p><strong>Читатель:</strong> <?= htmlspecialchars($reader->full_name) ?></p>
                 <p><strong>Книга:</strong> <?= htmlspecialchars($book->title) ?></p>
                 <p><strong>Выдана:</strong> <?= htmlspecialchars($book->pivot->issued_at) ?></p>

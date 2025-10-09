@@ -1,4 +1,4 @@
-<main>
+<div>
     <div class="auth-wrapper">
         <div class="auth-box">
             <h2>Регистрация</h2>
@@ -26,4 +26,4 @@
             </form>
         </div>
     </div>
-</main>
+</div>

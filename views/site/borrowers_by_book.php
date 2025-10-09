@@ -3,6 +3,7 @@
         <h2 class="page-title">Читатели, брали книгу</h2>
 
         <form method="GET" action="/practic/borrowers-by-book" class="filter-form">
+            <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
             <label>Выберите книгу:
                 <select name="book_id">
                     <option value="">Выберите книгу</option>

@@ -85,8 +85,8 @@ body {
 
 main {
     flex: 1;
-    margin-left: 220px; /* чтобы контент не залезал под sidebar */
-    padding: 20px;
+    margin-left: 250px;
+    padding: 40px;
 }
 
 .auth-wrapper {
@@ -329,7 +329,7 @@ main {
 
 /* --- Контент --- */
 .main-content {
-    padding: 20px 40px;
+  margin-left: 0;
 }
 
 .content h2 {
@@ -1385,7 +1385,6 @@ h2 {
 }
 
 h2 {
-    text-align: center;
     margin-bottom: 20px;
     font-size: 26px;
     font-weight: bold;

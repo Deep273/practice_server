@@ -2,24 +2,40 @@
     <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
     <h2>Добавить книгу</h2>
 
+    <?php if (!empty($errors) || !empty($message)): ?>
+        <div class="error-messages" style="background:#ffe0e0;padding:10px;border:1px solid #e58;border-radius:8px;margin-bottom:15px;color:#a00;">
+            <?php if (!empty($message)): ?>
+                <p><?= htmlspecialchars($message) ?></p>
+            <?php endif; ?>
+
+            <?php if (!empty($errors)): ?>
+                <ul>
+                    <?php foreach ($errors as $err): ?>
+                        <li><?= htmlspecialchars($err) ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php endif; ?>
+        </div>
+    <?php endif; ?>
+
     <label>Название:</label>
-    <input type="text" name="title" required>
+    <input type="text" name="title" required value="<?= htmlspecialchars($old['title'] ?? '') ?>">
 
     <label>Автор:</label>
-    <input type="text" name="author" required>
+    <input type="text" name="author" required value="<?= htmlspecialchars($old['author'] ?? '') ?>">
 
     <label>Год издания:</label>
-    <input type="date" name="published_year" required class="date-input">
+    <input type="date" name="published_year" required class="date-input" max="<?= date('Y-m-d') ?>" value="<?= htmlspecialchars($old['published_year'] ?? '') ?>">
 
     <label>Цена:</label>
-    <input type="number" step="0.01" name="price" required>
+    <input type="number" step="0.01" name="price" required min="0" value="<?= htmlspecialchars($old['price'] ?? '') ?>">
 
     <label class="checkbox-label">
-        <input type="checkbox" name="is_new_edition"> Новое издание
+        <input type="checkbox" name="is_new_edition" <?= !empty($old['is_new_edition']) ? 'checked' : '' ?>> Новое издание
     </label>
 
     <label>Аннотация:</label>
-    <textarea name="description" rows="4"></textarea>
+    <textarea name="description" rows="4"><?= htmlspecialchars($old['description'] ?? '') ?></textarea>
 
     <label>Обложка книги:</label>
     <div class="file-upload">
@@ -32,10 +48,11 @@
 </form>
 
 <script>
-    // Установка только года (если нужно сохранить именно год)
-    const dateInput = document.querySelector('.date-input');
-    dateInput.addEventListener('change', function() {
-        const date = new Date(this.value);
-        this.dataset.year = date.getFullYear(); // сохраняем год отдельно
+    // Показываем имя выбранного файла
+    const fileInput = document.getElementById('cover');
+    const fileNameSpan = document.querySelector('.file-name');
+
+    fileInput.addEventListener('change', function() {
+        fileNameSpan.textContent = this.files.length > 0 ? this.files[0].name : 'Файл не выбран';
     });
 </script>

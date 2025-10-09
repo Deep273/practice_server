@@ -18,15 +18,6 @@ class User extends Model implements IdentityInterface
         'role'
     ];
 
-
-    protected static function booted()
-    {
-        static::created(function ($user) {
-            $user->password = md5($user->password);
-            $user->save();
-        });
-    }
-
     //Выборка пользователя по первичному ключу
     public function findIdentity(int $id)
     {
