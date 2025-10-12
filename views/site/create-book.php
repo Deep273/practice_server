@@ -3,7 +3,7 @@
     <h2>Добавить книгу</h2>
 
     <?php if (!empty($errors) || !empty($message)): ?>
-        <div class="error-messages" style="background:#ffe0e0;padding:10px;border:1px solid #e58;border-radius:8px;margin-bottom:15px;color:#a00;">
+        <div class="form-message <?= !empty($errors) ? 'error' : 'success' ?>">
             <?php if (!empty($message)): ?>
                 <p><?= htmlspecialchars($message) ?></p>
             <?php endif; ?>
@@ -17,6 +17,7 @@
             <?php endif; ?>
         </div>
     <?php endif; ?>
+
 
     <label>Название:</label>
     <input type="text" name="title" required value="<?= htmlspecialchars($old['title'] ?? '') ?>">

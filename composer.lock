@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "01b85463841c4e7daa62614041294809",
+    "content-hash": "71c783c19b16925bba55833fbfbb4bfd",
     "packages": [
         {
             "name": "brick/math",
@@ -134,6 +134,50 @@
                 }
             ],
             "time": "2023-12-11T17:09:12+00:00"
+        },
+        {
+            "name": "deep273/collect",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Deep273/collect.git",
+                "reference": "b329001ea907eb0d5c2f98c20513aa0c996eea6e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Deep273/collect/zipball/b329001ea907eb0d5c2f98c20513aa0c996eea6e",
+                "reference": "b329001ea907eb0d5c2f98c20513aa0c996eea6e",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.4 | ^8.0"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/helpers.php"
+                ],
+                "psr-4": {
+                    "Collect\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "deep273",
+                    "email": "soul42460@gmail.com"
+                }
+            ],
+            "description": "Module for working with arrays ",
+            "support": {
+                "issues": "https://github.com/Deep273/collect/issues",
+                "source": "https://github.com/Deep273/collect/tree/main"
+            },
+            "time": "2025-10-09T20:03:01+00:00"
         },
         {
             "name": "doctrine/inflector",
@@ -1581,6 +1625,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "deep273/collect": 20,
         "illuminate/database": 20,
         "illuminate/events": 20,
         "nikic/fast-route": 20

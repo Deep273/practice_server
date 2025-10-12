@@ -54,6 +54,12 @@ Route::add(['GET', 'POST'], '/borrowers-by-book', [Controller\Site::class, 'borr
 Route::add('GET', '/most-popular-books', [Controller\Site::class, 'mostPopularBooks'])
     ->middleware('role:librarian,admin');
 
+Route::add('POST', '/delete-readers', [Controller\Site::class, 'deleteReader'])
+    ->middleware('role:librarian,admin');
+
+Route::add('POST', '/delete-books', [Controller\Site::class, 'deleteBooks'])
+    ->middleware('role:librarian,admin');
+
 
 // Только для админки
 Route::add(['GET', 'POST'], '/create-librarian', [Controller\Site::class, 'createLibrarian'])

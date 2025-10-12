@@ -1,5 +1,3 @@
-
-
 <div class="form-container">
     <div>
         <h2 class="form-title">Выдача книги читателю</h2>

@@ -76,7 +76,7 @@ class Site
             return new View('site.login');
         }
 
-        // -------- ВАЛИДАЦИЯ --------
+        // валидация
         $validator = new \Src\Validator\Validator(
             $request->all(),
             [
@@ -94,7 +94,7 @@ class Site
             ]);
         }
 
-        // -------- АУТЕНТИФИКАЦИЯ --------
+        // аутентификация
         if (\Src\Auth\Auth::attempt($request->all())) {
             app()->route->redirect('/hello');
         }
@@ -113,28 +113,28 @@ class Site
     // Метод для отображения формы добавления книги
     public function createBook(): string
     {
-        return new View('site/create-book'); // путь до views/site/add_book.php
+        return new View('site/create-book');
     }
 
-// Обработка формы
+    // Обработка формы
     public function storeBook(Request $request): string
     {
         $data = $request->all();
         $errors = [];
 
-        // 1️⃣ Проверка обязательных полей
+        // Проверка обязательных полей
         foreach (['title', 'author', 'published_year', 'price'] as $field) {
             if (empty($data[$field])) {
                 $errors[] = "Поле {$field} обязательно для заполнения.";
             }
         }
 
-        // 2️⃣ Проверка на отрицательную цену
+        // Проверка на отрицательную цену
         if (isset($data['price']) && (float)$data['price'] < 0) {
             $errors[] = "Цена не может быть отрицательной.";
         }
 
-        // 3️⃣ Проверка, чтобы дата не была из будущего
+        // Проверка, чтобы дата не была из будущего
         if (!empty($data['published_year'])) {
             $inputDate = strtotime($data['published_year']);
             $currentDate = strtotime(date('Y-m-d'));
@@ -143,13 +143,13 @@ class Site
             }
         }
 
-        // 4️⃣ Валидация обложки
+        // Валидация обложки
         $imageValidator = new \Src\Validator\ImageValidator($_FILES['cover'] ?? null);
         if ($imageValidator->fails()) {
             $errors = array_merge($errors, $imageValidator->errors());
         }
 
-        // 5️⃣ Если есть ошибки — вернуть форму с ними
+        // Если есть ошибки — вернуть форму с ними
         if (!empty($errors)) {
             return new View('site/create-book', [
                 'errors' => $errors,
@@ -157,7 +157,7 @@ class Site
             ]);
         }
 
-        // 6️⃣ Загрузка обложки
+        // Загрузка обложки
         $coverPath = null;
         if (!empty($_FILES['cover']['name'])) {
             $uploadDir = $_SERVER['DOCUMENT_ROOT'] . '/uploads/books/';
@@ -171,7 +171,7 @@ class Site
             }
         }
 
-        // 7️⃣ Сохранение
+        // Сохранение
         \Model\Book::create([
             'title'          => $data['title'],
             'author'         => $data['author'],
@@ -184,8 +184,6 @@ class Site
 
         return new View('site/create-book', ['message' => 'Книга успешно добавлена!']);
     }
-
-
 
     public function createReader(): string
     {
@@ -216,6 +214,31 @@ class Site
         return new View('site/add_reader', ['message' => 'Читатель успешно добавлен!']);
     }
 
+    public function deleteReader(Request $request): string
+    {
+        // Получаем все данные из POST
+        $data = $request->all();
+        $ids = $data['reader_ids'] ?? [];
+
+        // Если ничего не выбрано
+        if (empty($ids)) {
+            return new View('site/readers', [
+                'readers' => \Model\Reader::all(),
+                'message' => 'Вы не выбрали ни одного читателя для удаления.'
+            ]);
+        }
+
+        // Удаляем выбранных читателей
+        \Model\Reader::destroy($ids);
+
+        // После удаления показываем обновлённый список
+        return new View('site/readers', [
+            'readers' => \Model\Reader::all(),
+            'message' => 'Выбранные читатели успешно удалены!'
+        ]);
+    }
+
+
     public function listBooks(Request $request): string
     {
         $query = Book::query();
@@ -237,7 +260,7 @@ class Site
 
     public function listReaders(): string
     {
-        $readers = Reader::all(); // Получаем всех читателей из БД
+        $readers = Reader::all(); // Получаем всех читателей из бд
 
         return new View('site.readers', ['readers' => $readers]);
     }
@@ -304,7 +327,7 @@ class Site
         return new View('site.return_book', ['readers' => $readers]);
     }
 
-// Обработка возврата книги
+    // Обработка возврата книги
     public function returnBook(Request $request): string
     {
         $data = $request->all();
@@ -382,7 +405,7 @@ class Site
         $books = Book::all();
 
         if ($bookId) {
-            // Загружаем книгу с читателями, которые брали ее (включая даты)
+            // Загружаем книгу с читателями, которые брали ее
             $book = Book::with(['readers' => function ($query) {
                 $query->orderBy('book_reader.issued_at', 'desc');
             }])->find($bookId);
@@ -405,9 +428,9 @@ class Site
 
     public function mostPopularBooks(): string
     {
-        // Получаем книги с подсчётом количества выдач (borrowings)
+        // Получаем книги с подсчётом количества выдач
         $books = Book::withCount(['readers as borrowings_count' => function ($query) {
-            // Если нужно, можно добавить дополнительные условия (например, только активные выдачи)
+
         }])
             ->orderBy('borrowings_count', 'desc')
             ->get();
@@ -454,7 +477,7 @@ class Site
             ]);
         }
 
-        // Если GET-запрос → просто выводим форму
+        // Если GET-запрос, то просто выводим форму
         return new View('site/create_librarian');
     }
 
@@ -472,6 +495,28 @@ class Site
             'librarians' => $librarians
         ]);
     }
+
+    public function deleteBooks(Request $request): string
+    {
+        $data = $request->all();
+        $ids = $data['book_ids'] ?? [];
+
+        if (empty($ids)) {
+            return new View('site/list_books', [
+                'books' => \Model\Book::all(),
+                'message' => 'Вы не выбрали ни одной книги для удаления.'
+            ]);
+        }
+
+        // Удаляем выбранные книги
+        \Model\Book::destroy($ids);
+
+        return new View('site/list_books', [
+            'books' => \Model\Book::all(),
+            'message' => 'Выбранные книги успешно удалены!'
+        ]);
+    }
+
 
 }
 
