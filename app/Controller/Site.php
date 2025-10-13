@@ -9,7 +9,8 @@ use Model\User;
 use Src\Auth\Auth;
 use Model\Book;
 use Model\Reader;
-use Src\Validator\Validator;
+use PhoneValidator\PhoneValidator;
+
 
 
 class Site
@@ -28,22 +29,30 @@ class Site
     public function signup(Request $request): string
     {
         if ($request->method === 'POST') {
+
             $data = $request->all();
 
-            // Проверка обычных обязательных полей
-            $validator = new \Src\Validator\Validator($data, [
-                'name'     => ['required'],
-                'login'    => ['required'],
-                'password' => ['required'],
-            ]);
+            // Валидация полей и уникальности логина
+            $validator = new \Src\Validator\Validator(
+                $data,
+                [
+                    'name'     => ['required'],
+                    'login'    => ['required', 'unique:users,login'],
+                    'password' => ['required'],
+                ],
+                [
+                    'required' => 'Поле :field пусто',
+                    'unique'   => 'Поле :field должно быть уникальным',
+                ]
+            );
 
             // Проверка сложности пароля
             $passwordValidator = new \Src\Validator\PasswordValidator($data['password'] ?? '');
 
+            // Если есть ошибки — объединяем обе группы ошибок
             if ($validator->fails() || $passwordValidator->fails()) {
                 $errors = $validator->errors();
 
-                // Добавляем ошибки пароля, если есть
                 if ($passwordValidator->fails()) {
                     $errors['password'] = array_merge(
                         $errors['password'] ?? [],
@@ -53,18 +62,27 @@ class Site
 
                 return new \Src\View('site.signup', [
                     'errors' => $errors,
-                    'old'    => $data
+                    'old'    => $data,
+                    'message' => 'Проверьте правильность заполнения полей.'
                 ]);
             }
 
-            // Хэшируем и сохраняем
+            // Хэшируем пароль перед сохранением
             $data['password'] = md5($data['password']);
 
+            // Создание пользователя
             if (\Model\User::create($data)) {
                 app()->route->redirect('/login');
             }
+
+            // Если создание не удалось
+            return new \Src\View('site.signup', [
+                'message' => 'Ошибка при создании пользователя. Попробуйте позже.',
+                'old'     => $data
+            ]);
         }
 
+        // Если это GET — просто отображаем форму
         return new \Src\View('site.signup');
     }
 
@@ -194,25 +212,42 @@ class Site
     public function storeReader(Request $request): string
     {
         $data = $request->all();
+        $errors = [];
 
-        if (
-            empty($data['card_number']) ||
-            empty($data['full_name']) ||
-            empty($data['address']) ||
-            empty($data['phone_number'])
-        ) {
-            return new View('site/add_reader', ['message' => 'Все поля обязательны!']);
+        // Проверяем обязательные поля
+        foreach (['card_number', 'full_name', 'address', 'phone_number'] as $field) {
+            if (empty($data[$field])) {
+                $errors[] = "Поле {$field} обязательно для заполнения.";
+            }
         }
 
-        Reader::create([
+        // Проверка телефона через PhoneValidator
+        $phoneValidator = new PhoneValidator($data['phone_number'] ?? '');
+        if ($phoneValidator->fails()) {
+            $errors = array_merge($errors, $phoneValidator->errors());
+        }
+        // Если есть ошибки — возвращаем форму с сообщением
+        if (!empty($errors)) {
+            return new View('site/add_reader', [
+                'message' => implode ($errors),
+                'old' => $data
+            ]);
+        }
+
+        // Сохраняем нового читателя
+        \Model\Reader::create([
             'card_number' => $data['card_number'],
             'full_name' => $data['full_name'],
             'address' => $data['address'],
             'phone_number' => $data['phone_number']
         ]);
 
-        return new View('site/add_reader', ['message' => 'Читатель успешно добавлен!']);
+        // Успешное добавление
+        return new View('site/add_reader', [
+            'message' => 'Читатель успешно добавлен!'
+        ]);
     }
+
 
     public function deleteReader(Request $request): string
     {
@@ -464,12 +499,15 @@ class Site
                 ]);
             }
 
+            // Хешируем пароль перед сохранением
+            $data['password'] = md5($data['password']);
+
             // Создание библиотекаря
             User::create([
-                'name' => $data['name'],
-                'login' => $data['login'],
-                'password' => $data['password'], // md5 ставится в booted()
-                'role' => 'librarian',
+                'name'     => $data['name'],
+                'login'    => $data['login'],
+                'password' => $data['password'],
+                'role'     => 'librarian',
             ]);
 
             return new View('site/create_librarian', [
@@ -477,9 +515,10 @@ class Site
             ]);
         }
 
-        // Если GET-запрос, то просто выводим форму
+        // Если GET-запрос → просто отображаем форму
         return new View('site/create_librarian');
     }
+
 
     public function listLibrarians(): string
     {
@@ -516,6 +555,7 @@ class Site
             'message' => 'Выбранные книги успешно удалены!'
         ]);
     }
+
 
 
 }

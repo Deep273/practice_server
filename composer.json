@@ -14,7 +14,8 @@
         "illuminate/database": "10.x-dev",
         "illuminate/events": "10.x-dev",
         "nikic/fast-route": "^2.0@dev",
-        "deep273/collect": "dev-main"
+        "deep273/collect": "dev-main",
+        "deep273/validator_package": "dev-main"
 
     },
     "autoload": {
@@ -22,6 +23,8 @@
             "Src\\": "core/Src/",
             "": "app/"
         }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "10.5.x-dev"
     }
-
 }
