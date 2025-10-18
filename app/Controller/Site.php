@@ -121,7 +121,6 @@ class Site
         return new View('site.login', ['message' => 'Неправильные логин или пароль']);
     }
 
-
     public function logout(): void
     {
         Auth::logout();
@@ -324,7 +323,7 @@ class Site
         // Получаем читателя
         $reader = Reader::find($data['reader_id']);
 
-        // Проверим, не выдана ли уже эта книга этому читателю без возврата
+        // Проверка, не выдана ли уже эта книга этому читателю без возврата
         $alreadyIssued = $reader->books()
             ->wherePivot('book_id', $data['book_id'])
             ->wherePivot('returned_at', null)
@@ -411,7 +410,6 @@ class Site
             ]);
         } else {
             // Получаем все книги, которые сейчас не возвращены (у всех читателей)
-            // Для этого получим всех читателей с книгами с условием returned_at = null
             $readers = Reader::with(['books' => function ($query) {
                 $query->wherePivot('returned_at', null);
             }])->get();
@@ -515,7 +513,7 @@ class Site
             ]);
         }
 
-        // Если GET-запрос → просто отображаем форму
+        // Если GET-запрос - просто отображаем форму
         return new View('site/create_librarian');
     }
 

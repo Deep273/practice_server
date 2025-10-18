@@ -13,21 +13,20 @@
     }
 
     .sidebar {
-        position: fixed;              /* ← фиксируем панель */
+        position: fixed;
         top: 0;
         left: 0;
         width: 220px;
-        height: 100vh;                /* высота на весь экран */
+        height: 100vh;
         background-color: #222222;
         color: white;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         padding: 20px 0;
-        overflow-y: auto;             /* если контента много — появится прокрутка */
-        z-index: 1000;                /* чтобы всегда была поверх остального */
+        overflow-y: auto;
+        z-index: 1000;
     }
-
 
     .sidebar .logo {
         text-align: center;
@@ -274,7 +273,6 @@
         background: #111;
     }
 
-    /* Поиск */
     .search-form {
         margin-left: auto;
     }
@@ -317,7 +315,6 @@
         padding: 0;
     }
 
-    /* Аватар */
     .header-avatar .avatar {
         width: 40px;
         height: 40px;
@@ -327,7 +324,6 @@
         box-shadow: 0 2px 6px rgba(0,0,0,0.6);
     }
 
-    /* --- Контент --- */
     .main-content {
       margin-left: 0;
     }
@@ -346,7 +342,6 @@
         color: #bbb;
     }
 
-    /* Книги */
     .books-grid {
         display: flex;
         gap: 40px;
@@ -1021,7 +1016,6 @@
         margin-top: 15px;
     }
 
-    /* Контейнер по центру */
     .form-container {
         display: flex;
         justify-content: center;
@@ -1030,7 +1024,6 @@
         padding: 20px;
     }
 
-    /* Внутренний блок */
     .form-container > div {
         background: #1a1a1a;
         padding: 25px 30px;
@@ -1056,7 +1049,7 @@
     }
 
     .form-message.success {
-        color: #4CAF50;
+        color: #a259ff;
     }
 
     .form-message.error {
@@ -1514,17 +1507,6 @@
         cursor: pointer;
     }
 
-    /* Кнопка удаления — красная */
-    .delete-btn {
-        background: #a00000;
-        color: #fff;
-    }
-
-    .delete-btn:hover {
-        background: #cc0000;
-    }
-
-    /* Таблица */
     .readers-table {
         width: 100%;
         border-collapse: collapse;
@@ -1556,7 +1538,6 @@
         background: #222;
     }
 
-    /* Чекбоксы */
     .checkbox-cell {
         text-align: center;
     }
@@ -1568,7 +1549,6 @@
         cursor: pointer;
     }
 
-    /* Сообщения */
     .form-message {
         background: rgba(162, 89, 255, 0.15);
         border-left: 3px solid #a259ff;
@@ -1581,7 +1561,6 @@
         font-size: 14px;
     }
 
-    /* Пустое сообщение */
     .empty-msg {
         text-align: center;
         color: #aaa;
@@ -1602,21 +1581,18 @@
         animation: fadeIn 0.4s ease;
     }
 
-    /* Для сообщений об ошибках */
     .form-message.error {
         background: rgba(255, 77, 77, 0.15);
         border-left: 3px solid #ff4d4d;
         color: #ff4d4d;
     }
 
-    /* Для успешных действий */
     .form-message.success {
-        background: rgba(76, 175, 80, 0.15);
-        border-left: 3px solid #4caf50;
-        color: #4caf50;
+        background: rgba(162, 89, 255, 0.15);
+        border-left: 3px solid #a259ff;
+        color: #a259ff;
     }
 
-    /* Анимация плавного появления */
     @keyframes fadeIn {
         from { opacity: 0; transform: translateY(-5px); }
         to { opacity: 1; transform: translateY(0); }
