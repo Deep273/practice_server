@@ -479,7 +479,7 @@ class Site
             app()->route->redirect('/login');
         }
 
-        // Если это POST-запрос → обрабатываем отправку формы
+        // Если это POST-запрос - обрабатываем отправку формы
         if ($request->method === 'POST') {
             $data = $request->all();
 
@@ -553,8 +553,6 @@ class Site
             'message' => 'Выбранные книги успешно удалены!'
         ]);
     }
-
-
 
 }
 

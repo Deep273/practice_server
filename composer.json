@@ -15,13 +15,12 @@
         "illuminate/events": "10.x-dev",
         "nikic/fast-route": "^2.0@dev",
         "deep273/collect": "dev-main",
-        "deep273/validator_package": "dev-main"
-
+        "deep273/validator_package": "dev-main",
+        "ext-json": "*"
     },
     "autoload": {
         "psr-4": {
-            "Src\\": "core/Src/",
-            "": "app/"
+            "Src\\": "core/Src/"
         }
     },
     "require-dev": {

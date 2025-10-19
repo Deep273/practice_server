@@ -3,6 +3,7 @@
 namespace Src\Auth;
 
 use Src\Session;
+use Model\User;
 
 class Auth
 {
@@ -47,6 +48,21 @@ class Auth
         Session::clear('id');
         return true;
     }
+
+    public static function attemptToken(string $token): ?User
+    {
+        return User::where('api_token', $token)->first();
+    }
+
+    // 🔹 Генерация токена при успешном входе
+    public static function generateToken(User $user): string
+    {
+        $token = bin2hex(random_bytes(30));
+        $user->api_token = $token;
+        $user->save(); // сохраняем в БД
+        return $token;
+    }
+
 
     //Генерация нового токена для CSRF
     public static function generateCSRF(): string

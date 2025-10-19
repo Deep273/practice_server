@@ -11,11 +11,15 @@ class User extends Model implements IdentityInterface
     use HasFactory;
 
     public $timestamps = false;
+    /**
+     * @var mixed|string
+     */
     protected $fillable = [
+        'api_token',
         'name',
         'login',
         'password',
-        'role'
+        'role',
     ];
 
     //Выборка пользователя по первичному ключу
