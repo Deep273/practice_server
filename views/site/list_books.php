@@ -38,7 +38,8 @@
                         <label class="book-select">
                             <input type="checkbox" name="book_ids[]" value="<?= $book->id ?>">
                         </label>
-                        <img src="<?= htmlspecialchars($book->cover_url ?? '/public/img/placeholder.jpg') ?>" alt="Обложка">
+                        <img src="<?= htmlspecialchars('/practic' . ($book->cover_url ?? '/public/img/placeholder.jpg')) ?>" alt="Обложка">
+
                         <div class="book-info">
                             <h3 class="book-title">“<?= htmlspecialchars($book->title) ?>”</h3>
                             <p class="book-author">Автор: <?= htmlspecialchars($book->author) ?></p>

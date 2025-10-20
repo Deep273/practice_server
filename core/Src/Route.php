@@ -66,9 +66,27 @@ class Route
     //Добавление middlewares для текущего маршрута
     public function middleware(...$middlewares): self
     {
-        Middleware::single()->add($this->currentHttpMethod, $this->currentRoute, $middlewares);
+        // $currentHttpMethod может быть строкой или массивом
+        $methods = is_array($this->currentHttpMethod) ? $this->currentHttpMethod : [$this->currentHttpMethod];
+
+        foreach ($methods as $method) {
+            foreach ($middlewares as $mw) {
+                // Если массив (API) или строка (web)
+                if (is_array($mw)) {
+                    // API: массив классов
+                    foreach ($mw as $class) {
+                        Middleware::single()->add($method, $this->currentRoute, [$class]);
+                    }
+                } else {
+                    // web: строка вида 'role:librarian,admin'
+                    Middleware::single()->add($method, $this->currentRoute, [$mw]);
+                }
+            }
+        }
+
         return $this;
     }
+
 
     public function start(): void
     {

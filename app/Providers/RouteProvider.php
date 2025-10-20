@@ -12,22 +12,21 @@ class RouteProvider extends AbstractProvider
 
     public function boot(): void
     {
-        $this->app->bind('route', Route::single()->setPrefix($this->app->settings->getRootPath()));
-
         if ($this->checkPrefix('/api')) {
-//Если префикс адреса api то удаляем не нужные middleware
             $this->app->settings->removeAppMiddleware('csrf');
             $this->app->settings->removeAppMiddleware('specialChars');
-//Загружаем маршруты из файла для апи
-            Route::group('/api', function () {
-                 require_once __DIR__ . '/../..' . $this->app->settings->getRoutePath() . '/api.php';
+
+            Route::group('/api', function() {
+                require_once __DIR__ . '/../..' . $this->app->settings->getRoutePath() . '/api.php';
             });
+
             return;
         }
 
-        $this->app->settings->removeAppMiddleware('json');
-        //Загружаем маршруты из стандартного файла
-        require_once __DIR__ . '/../..' . $this->app->settings->getRoutePath() . '/web.php';
+// Для всех остальных маршрутов
+        Route::group('', function() {
+            require_once __DIR__ . '/../..' . $this->app->settings->getRoutePath() . '/web.php';
+        });
     }
 
     private function getUri(): string

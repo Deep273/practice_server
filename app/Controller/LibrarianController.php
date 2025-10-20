@@ -68,4 +68,34 @@ class LibrarianController
             'librarians' => $librarians
         ]);
     }
+
+    public function deleteLibrarians(Request $request): string
+    {
+        // Проверяем авторизацию
+        if (!Auth::user() || !Auth::user()->isAdmin()) {
+            app()->route->redirect('/login');
+        }
+
+        $data = $request->all();
+        $ids = $data['librarian_ids'] ?? [];
+
+        if (!empty($ids)) {
+            // Удаляем выбранных библиотекарей
+            User::whereIn('id', $ids)->delete();
+            $message = 'Выбранные библиотекари успешно удалены!';
+        } else {
+            $message = 'Не выбрано ни одного библиотекаря!';
+        }
+
+        // Получаем всех библиотекарей
+        $librarians = User::where('role', 'librarian')->get();
+
+        // Возвращаем View, как у читателей
+        return new View('site/list_librarian', [
+            'librarians' => $librarians,
+            'message' => $message
+        ]);
+    }
+
+
 }

@@ -66,3 +66,7 @@ Route::add(['GET', 'POST'], '/create-librarian', [Controller\LibrarianController
 
 Route::add('GET', '/librarians', [Controller\LibrarianController::class, 'listLibrarians'])
     ->middleware('role:admin');
+
+Route::add('POST', '/delete-librarians', [Controller\LibrarianController::class, 'deleteLibrarians'])
+    ->middleware('role:admin');
+

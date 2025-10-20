@@ -32,23 +32,27 @@ class Middleware
     }
 
     //Запуск всех middlewares для текущего маршрута
-    private function runMiddlewares(string $httpMethod, string $uri,
-                                    Request $request): Request
+    private function runMiddlewares(string $httpMethod, string $uri, Request $request): Request
     {
-//Получаем список всех разрешенных классов middlewares из
+        $routeMiddleware = app()->settings->app['routeMiddleware'];
 
-$routeMiddleware = app()->settings->app['routeMiddleware'];
-//Перебираем все middlewares для текущего адреса
-        foreach ($this->getMiddlewaresForRoute($httpMethod, $uri) as
-                 $middleware) {
-            $args = explode(':', $middleware);
-//Создаем объект и вызываем метод handle
-            $request = (new $routeMiddleware[$args[0]])->handle($request,
-                $args[1]?? null) ?? $request;
+        foreach ($this->getMiddlewaresForRoute($httpMethod, $uri) as $middleware) {
+            // Если класс существует — API middleware
+            if (class_exists($middleware)) {
+                $request = (new $middleware)->handle($request) ?? $request;
+                continue;
+            }
+
+            // Web middleware: 'role:librarian,admin'
+            [$name, $arg] = explode(':', $middleware . ':'); // добавляем ':' на всякий случай
+            if (!isset($routeMiddleware[$name])) continue;
+
+            $request = (new $routeMiddleware[$name])->handle($request, $arg ?: null) ?? $request;
         }
-//Возвращаем итоговый request
+
         return $request;
     }
+
 //Запуск всех глобальных middlewares
     private function runAppMiddlewares(Request $request): Request
     {

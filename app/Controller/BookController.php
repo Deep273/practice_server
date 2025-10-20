@@ -47,14 +47,22 @@ class BookController
             ]);
         }
 
+
         $coverPath = null;
+
         if (!empty($_FILES['cover']['name'])) {
-            $uploadDir = $_SERVER['DOCUMENT_ROOT'] . '/uploads/books/';
-            if (!is_dir($uploadDir)) mkdir($uploadDir, 0777, true);
-            $fileName = time() . '_' . basename($_FILES['cover']['name']);
+            // Директория для загрузки
+            $uploadDir = __DIR__ . '/../../public/uploads/books/';
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0777, true);
+            }
+
+            // Уникальное имя файла
+            $fileName = time() . '_' . bin2hex(random_bytes(5)) . '_' . preg_replace('/[^a-zA-Z0-9_\.-]/', '_', basename($_FILES['cover']['name']));
             $targetFile = $uploadDir . $fileName;
+
             if (move_uploaded_file($_FILES['cover']['tmp_name'], $targetFile)) {
-                $coverPath = '/uploads/books/' . $fileName;
+                $coverPath = '/uploads/books/' . $fileName; // сохраняем относительный путь
             }
         }
 
@@ -91,15 +99,20 @@ class BookController
     {
         $data = $request->all();
         $ids = $data['book_ids'] ?? [];
+        $books = Book::whereIn('id', $ids)->get();
 
-        if (empty($ids)) {
-            return new View('site/list_books', [
-                'books' => Book::all(),
-                'message' => 'Вы не выбрали ни одной книги для удаления.'
-            ]);
+        foreach ($books as $book) {
+            if (!empty($book->cover_url)) {
+                // Полный путь к файлу на диске
+                $filePath = __DIR__ . '/../../public' . $book->cover_url;
+                if (file_exists($filePath)) {
+                    unlink($filePath);
+                }
+            }
         }
 
         Book::destroy($ids);
+
 
         return new View('site/list_books', [
             'books' => Book::all(),

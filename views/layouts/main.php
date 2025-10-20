@@ -41,7 +41,7 @@ $current = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
                 <?php endif; ?>
 
                 <?php if (app()->auth::user()->isAdmin()): ?>
-                    <a href="<?= app()->route->getUrl('/create-librarian') ?>"
+                    <a href="<?= app()->route->getUrl('/librarians') ?>"
                        class="<?= $current === '/practic/create-librarian' ? 'active' : '' ?>">
                         <img src="public/img/library.svg" alt="Добавить библиотекаря"> Добавить библиотекаря
                     </a>
