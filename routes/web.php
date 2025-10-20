@@ -2,68 +2,67 @@
 
 use Src\Route;
 
-Route::add('GET', '/hello', [Controller\Site::class, 'hello'])
+/* Авторизация */
+Route::add(['GET', 'POST'], '/signup', [Controller\AuthController::class, 'signup']);
+Route::add(['GET', 'POST'], '/login', [Controller\AuthController::class, 'login']);
+Route::add('GET', '/logout', [Controller\AuthController::class, 'logout']);
+
+/* Главная страница- */
+Route::add('GET', '/hello', [Controller\SiteController::class, 'hello'])
     ->middleware('auth');
-Route::add(['GET', 'POST'], '/signup', [Controller\Site::class, 'signup']);
-Route::add(['GET', 'POST'], '/login', [Controller\Site::class, 'login']);
-Route::add('GET', '/logout', [Controller\Site::class, 'logout']);
 
-// Создание книги
-Route::add('GET', '/create-book', [Controller\Site::class, 'createBook'])
+/* Книги */
+Route::add('GET', '/books', [Controller\BookController::class, 'listBooks'])
     ->middleware('role:librarian,admin');
 
-Route::add('POST', '/create-book', [Controller\Site::class, 'storeBook'])
+Route::add('GET', '/create-book', [Controller\BookController::class, 'createBook'])
     ->middleware('role:librarian,admin');
 
-// Создание читателя
-Route::add('GET', '/create-reader', [Controller\Site::class, 'createReader'])
+Route::add('POST', '/create-book', [Controller\BookController::class, 'storeBook'])
     ->middleware('role:librarian,admin');
 
-Route::add('POST', '/create-reader', [Controller\Site::class, 'storeReader'])
+Route::add('POST', '/delete-books', [Controller\BookController::class, 'deleteBooks'])
     ->middleware('role:librarian,admin');
 
-// Выдача книги
-Route::add('GET', '/issue-book', [Controller\Site::class, 'issueBookForm'])
+Route::add('GET', '/most-popular-books', [Controller\BookController::class, 'mostPopularBooks'])
     ->middleware('role:librarian,admin');
 
-Route::add('POST', '/issue-book', [Controller\Site::class, 'issueBook'])
+/* Читатели */
+Route::add('GET', '/readers', [Controller\ReaderController::class, 'listReaders'])
     ->middleware('role:librarian,admin');
 
-// Просмотр выданных книг и возврат
-Route::add('GET', '/return-book', [Controller\Site::class, 'returnBookList'])
+Route::add('GET', '/create-reader', [Controller\ReaderController::class, 'createReader'])
     ->middleware('role:librarian,admin');
 
-Route::add('POST', '/return-book', [Controller\Site::class, 'returnBook'])
+Route::add('POST', '/create-reader', [Controller\ReaderController::class, 'storeReader'])
     ->middleware('role:librarian,admin');
 
-// Список книг и читателей — только для библиотекаря и админки
-Route::add('GET', '/books', [Controller\Site::class, 'listBooks'])
+Route::add('POST', '/delete-readers', [Controller\ReaderController::class, 'deleteReader'])
     ->middleware('role:librarian,admin');
 
-Route::add('GET', '/readers', [Controller\Site::class, 'listReaders'])
+/* Выдача и возврат */
+Route::add('GET', '/issue-book', [Controller\BorrowController::class, 'issueBookForm'])
     ->middleware('role:librarian,admin');
 
-// Просмотр кто взял какую книгу, книги у читателей
-Route::add(['GET', 'POST'], '/borrowed-books', [Controller\Site::class, 'borrowedBooks'])
+Route::add('POST', '/issue-book', [Controller\BorrowController::class, 'issueBook'])
     ->middleware('role:librarian,admin');
 
-Route::add(['GET', 'POST'], '/borrowers-by-book', [Controller\Site::class, 'borrowersByBook'])
+Route::add('GET', '/return-book', [Controller\BorrowController::class, 'returnBookList'])
     ->middleware('role:librarian,admin');
 
-// Самые популярные книги
-Route::add('GET', '/most-popular-books', [Controller\Site::class, 'mostPopularBooks'])
+Route::add('POST', '/return-book', [Controller\BorrowController::class, 'returnBook'])
     ->middleware('role:librarian,admin');
 
-Route::add('POST', '/delete-readers', [Controller\Site::class, 'deleteReader'])
+/* Статистика книн */
+Route::add(['GET', 'POST'], '/borrowed-books', [Controller\BorrowController::class, 'borrowedBooks'])
     ->middleware('role:librarian,admin');
 
-Route::add('POST', '/delete-books', [Controller\Site::class, 'deleteBooks'])
+Route::add(['GET', 'POST'], '/borrowers-by-book', [Controller\BorrowController::class, 'borrowersByBook'])
     ->middleware('role:librarian,admin');
 
-
-// Только для админки
-Route::add(['GET', 'POST'], '/create-librarian', [Controller\Site::class, 'createLibrarian'])
+/* Создание библиотекаря */
+Route::add(['GET', 'POST'], '/create-librarian', [Controller\LibrarianController::class, 'createLibrarian'])
     ->middleware('role:admin');
-// Список библиотекарей (только админка)
-Route::add('GET', '/librarians', [Controller\Site::class, 'listLibrarians'])
+
+Route::add('GET', '/librarians', [Controller\LibrarianController::class, 'listLibrarians'])
     ->middleware('role:admin');
